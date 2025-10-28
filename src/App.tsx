@@ -1,9 +1,9 @@
-import logo from 'assets/logo.png'
+import { MainScreen } from './screens/MainScreen/MainScreen'
 
 function App() {
   return (
     <>
-      <image scale={logo} />
+      <MainScreen />
     </>
   )
 }
