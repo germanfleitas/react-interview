@@ -1,11 +1,11 @@
 import { Todo } from '../Todo/Todo';
-import type { TodoType } from '../types';
+import type { TodoListType } from '../types';
 
-export const TodoList = ({ todos }: TodoListProps) => {
+export const TodoList = ({ todoList: { todos, name } }: TodoListProps) => {
 
   return (
     <div>
-      <p>Title</p>
+      <p>{name}</p>
       <div>
         {todos.map((todo) => <Todo key={todo.id} todo={todo}/>)}
       </div>
@@ -14,5 +14,5 @@ export const TodoList = ({ todos }: TodoListProps) => {
 }
 
 type TodoListProps = {
-  todos: TodoType[];
+  todoList: TodoListType;
 }

@@ -3,3 +3,9 @@ export type TodoType = {
   description: string;
   isCompleted: boolean;
 }
+
+export type TodoListType = {
+  id: number;
+  name: string;
+  todos: TodoType[]
+}
