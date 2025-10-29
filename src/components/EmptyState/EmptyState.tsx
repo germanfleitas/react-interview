@@ -1,8 +1,13 @@
+import { TodoAPI } from '@/services/TodoAPI';
 import { Button, ButtonGroup, EmptyState as ChakraUIEmptyState, VStack } from '@chakra-ui/react'
 import { HiClipboardCheck } from 'react-icons/hi'
 
 
 export const EmptyState = () => {
+  const onClickCreateNewTodoList = async () => {
+    await TodoAPI.createTodoList('New List');
+  };
+
   return (
     <ChakraUIEmptyState.Root>
       <ChakraUIEmptyState.Content>
@@ -16,7 +21,7 @@ export const EmptyState = () => {
           </ChakraUIEmptyState.Description>
         </VStack>
         <ButtonGroup>
-          <Button>Create new TODO list</Button>
+          <Button onClick={onClickCreateNewTodoList}>Create new TODO list</Button>
         </ButtonGroup>
       </ChakraUIEmptyState.Content>
     </ChakraUIEmptyState.Root>
