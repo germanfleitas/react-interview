@@ -1,5 +1,6 @@
-import { Container, Flex, Heading, ScrollArea } from '@chakra-ui/react';
-import { TodoList } from '../../components/TodoList/TodoList';
+import { Container, Heading } from '@chakra-ui/react';
+import { TodoListGroup } from '@/components/TodoListGroup/TodoListGroup';
+import { EmptyState } from '@/components/EmptyState/EmptyState';
 import type { TodoListType } from '../../components/types';
 
 const todoLists: TodoListType[] = [
@@ -38,18 +39,8 @@ const todoLists: TodoListType[] = [
 export const MainScreen = () => {
   return (
     <Container p={6} bg='gray.50' minH='100vh'>
-      <Heading justifySelf='center'>Todo App (Crunchloop Interview edition!)</Heading>
-      <ScrollArea.Root>
-        <ScrollArea.Viewport>
-          <ScrollArea.Content py="4">
-            <Flex gap="4" flexWrap="nowrap">
-              {todoLists.map((todoList) => <TodoList key={todoList.id} todoList={todoList} />)}
-            </Flex>
-          </ScrollArea.Content>
-        </ScrollArea.Viewport>
-        <ScrollArea.Scrollbar orientation="horizontal" />
-        <ScrollArea.Corner />
-      </ScrollArea.Root>
+      <Heading justifySelf='center'>TODO App (Crunchloop Interview edition!)</Heading>
+      {todoLists.length ? <TodoListGroup todoLists={todoLists} /> : <EmptyState />}
     </Container>
   );
 }
