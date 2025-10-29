@@ -1,15 +1,15 @@
+import { Card, VStack } from '@chakra-ui/react';
 import { Todo } from '../Todo/Todo';
 import type { TodoListType } from '../types';
 
 export const TodoList = ({ todoList: { todos, name } }: TodoListProps) => {
-
   return (
-    <div>
-      <p>{name}</p>
-      <div>
+    <Card.Root padding={6} width='20em' height='fit-content'>
+      <Card.Title marginBottom={4}>{name}</Card.Title>
+      <VStack>
         {todos.map((todo) => <Todo key={todo.id} todo={todo}/>)}
-      </div>
-    </div>
+      </VStack>
+    </Card.Root>
   );
 }
 
