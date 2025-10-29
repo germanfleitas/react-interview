@@ -1,13 +1,8 @@
-import { TodoAPI } from '@/services/TodoAPI';
-import { Button, ButtonGroup, EmptyState as ChakraUIEmptyState, VStack } from '@chakra-ui/react'
+import { Button, EmptyState as ChakraUIEmptyState, VStack } from '@chakra-ui/react'
 import { HiClipboardCheck } from 'react-icons/hi'
+import type { MouseEventHandler } from 'react'
 
-
-export const EmptyState = () => {
-  const onClickCreateNewTodoList = async () => {
-    await TodoAPI.createTodoList('New List');
-  };
-
+export const EmptyState = ({ onClickCreateNewTodoList }: EmptyStateProps) => {
   return (
     <ChakraUIEmptyState.Root>
       <ChakraUIEmptyState.Content>
@@ -20,10 +15,12 @@ export const EmptyState = () => {
             Add a new list to get started
           </ChakraUIEmptyState.Description>
         </VStack>
-        <ButtonGroup>
-          <Button onClick={onClickCreateNewTodoList}>Create new TODO list</Button>
-        </ButtonGroup>
+        <Button onClick={onClickCreateNewTodoList}>Create new TODO list</Button>
       </ChakraUIEmptyState.Content>
     </ChakraUIEmptyState.Root>
   )
+}
+
+type EmptyStateProps = {
+  onClickCreateNewTodoList: MouseEventHandler<HTMLButtonElement>;
 }

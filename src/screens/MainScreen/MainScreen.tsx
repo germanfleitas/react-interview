@@ -25,6 +25,12 @@ export const MainScreen = () => {
     }
   }, []);
 
+  const onClickCreateNewTodoList = async () => {
+    setIsLoading(true);
+    await TodoAPI.createTodoList('New List');
+    await getTodoLists();
+  };
+
   useEffect(() => {
     getTodoLists();
   }, [getTodoLists]);
@@ -35,7 +41,9 @@ export const MainScreen = () => {
       {
         isLoading 
           ? <Center minH='50vh'><Spinner /></Center>
-          : todoLists.length ? <TodoListGroup todoLists={todoLists} /> : <EmptyState />
+          : todoLists.length
+            ? <TodoListGroup todoLists={todoLists} onClickCreateNewTodoList={onClickCreateNewTodoList} />
+            : <EmptyState onClickCreateNewTodoList={onClickCreateNewTodoList} />
       }
       <Toaster />
     </Container>
