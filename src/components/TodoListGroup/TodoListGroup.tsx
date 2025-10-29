@@ -3,7 +3,7 @@ import { TodoList } from '../TodoList/TodoList';
 import type { MouseEventHandler } from 'react'
 import type { TodoListType } from '../types';
 
-export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList }: TodoListGroupProps) => {
+export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList, onClickCreateNewTodo }: TodoListGroupProps) => {
   return (
     <Container>
       <Button onClick={onClickCreateNewTodoList}>New TODO list</Button>
@@ -11,7 +11,13 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList }: TodoListG
         <ScrollArea.Viewport>
           <ScrollArea.Content py='4'>
             <Flex gap='4' flexWrap='nowrap'>
-              {todoLists.map((todoList) => <TodoList key={todoList.id} todoList={todoList} />)}
+              {todoLists.map((todoList) => (
+                <TodoList
+                  key={todoList.id}
+                  todoList={todoList}
+                  onClickCreateNewTodo={onClickCreateNewTodo(todoList.id)}
+                />
+              ))}
             </Flex>
           </ScrollArea.Content>
         </ScrollArea.Viewport>
@@ -25,4 +31,5 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList }: TodoListG
 type TodoListGroupProps = {
   todoLists: TodoListType[];
   onClickCreateNewTodoList: MouseEventHandler<HTMLButtonElement>;
+  onClickCreateNewTodo: (todoListId: number) => MouseEventHandler<HTMLButtonElement>;
 }

@@ -31,6 +31,11 @@ export const MainScreen = () => {
     await getTodoLists();
   };
 
+  const onClickCreateNewTodo = (todoListId: number) => () => {
+    console.log(todoListId);
+    // Add creation logic
+  };
+
   useEffect(() => {
     getTodoLists();
   }, [getTodoLists]);
@@ -42,7 +47,13 @@ export const MainScreen = () => {
         isLoading 
           ? <Center minH='50vh'><Spinner /></Center>
           : todoLists.length
-            ? <TodoListGroup todoLists={todoLists} onClickCreateNewTodoList={onClickCreateNewTodoList} />
+            ? (
+              <TodoListGroup
+                todoLists={todoLists}
+                onClickCreateNewTodoList={onClickCreateNewTodoList}
+                onClickCreateNewTodo={onClickCreateNewTodo}
+              />
+            )
             : <EmptyState onClickCreateNewTodoList={onClickCreateNewTodoList} />
       }
       <Toaster />
