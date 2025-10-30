@@ -1,20 +1,26 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Center, Container, Heading, Spinner } from '@chakra-ui/react';
+import { useCallback, useContext, useEffect, useState } from 'react';
+import { Container, Heading } from '@chakra-ui/react';
 import { TodoListGroup } from '@/components/TodoListGroup/TodoListGroup';
 import { EmptyState } from '@/components/EmptyState/EmptyState';
 import { TodoAPI } from '@/services/TodoAPI';
 import { Toaster, toaster } from '@/components/ui/toaster';
 import { NewTodoList } from '@/components/NewTodoList/NewTodoList';
+import { GeneralContext } from '@/context';
 import type { TodoListType } from '../../components/types';
 
 export const MainScreen = () => {
   const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const { setIsLoading } = useContext(GeneralContext);
 
   const resetErrorMessage = (e?: unknown) => {
     setErrorMessage((e as Error)?.message ?? null);
   };
+
+  const startCall = () => {
+    resetErrorMessage();
+    setIsLoading(true);
+  }
 
   const getTodoLists = useCallback(async () => {
     resetErrorMessage();
@@ -27,11 +33,11 @@ export const MainScreen = () => {
     } finally {
       setIsLoading(false);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onClickCreateNewTodoList = async (name: string) => {
-    resetErrorMessage();
-    setIsLoading(true);
+    startCall();
 
     try {
       await TodoAPI.createTodoList(name);
@@ -44,7 +50,7 @@ export const MainScreen = () => {
   };
 
   const onClickCreateNewTodo = (todoListId: number) => async (description: string) => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.createTodo(description, todoListId);
@@ -57,7 +63,7 @@ export const MainScreen = () => {
   };
 
   const onClickCompleteList = (todoListId: number) => async () => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.completeTodoList(todoListId);
@@ -70,7 +76,7 @@ export const MainScreen = () => {
   };
 
   const onClickEditList = (todoListId: number) => async (name: string) => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.editTodoList(todoListId, name);
@@ -83,7 +89,7 @@ export const MainScreen = () => {
   };
 
   const onClickDeleteList = (todoListId: number) => async () => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.deleteTodoList(todoListId);
@@ -96,7 +102,7 @@ export const MainScreen = () => {
   };
 
   const onToggleTodoCompleted = (todoId: number) => async (isCompleted: boolean) => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.toggleTodo(todoId, isCompleted);
@@ -109,7 +115,7 @@ export const MainScreen = () => {
   };
 
   const onDeleteTodo = (todoId: number) => async () => {
-    resetErrorMessage();
+    startCall();
 
     try {
       await TodoAPI.deleteTodo(todoId);
@@ -139,21 +145,19 @@ export const MainScreen = () => {
       <Heading justifySelf='center' marginBottom={4}>TODO App (Crunchloop Interview edition!)</Heading>
       <NewTodoList onClickCreateNewTodoList={onClickCreateNewTodoList} />
       {
-        isLoading 
-          ? <Center minH='50vh'><Spinner /></Center>
-          : todoLists.length
-            ? (
-              <TodoListGroup
-                todoLists={todoLists}
-                onClickCreateNewTodo={onClickCreateNewTodo}
-                onCompleteList={onClickCompleteList}
-                onEditList={onClickEditList}
-                onDeleteList={onClickDeleteList}
-                onToggleTodoCompleted={onToggleTodoCompleted}
-                onDeleteTodo={onDeleteTodo}
-              />
-            )
-            : <EmptyState />
+        todoLists.length
+          ? (
+            <TodoListGroup
+              todoLists={todoLists}
+              onClickCreateNewTodo={onClickCreateNewTodo}
+              onCompleteList={onClickCompleteList}
+              onEditList={onClickEditList}
+              onDeleteList={onClickDeleteList}
+              onToggleTodoCompleted={onToggleTodoCompleted}
+              onDeleteTodo={onDeleteTodo}
+            />
+          )
+          : <EmptyState />
       }
       <Toaster />
     </Container>

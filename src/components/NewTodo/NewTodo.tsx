@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Box, Button, ButtonGroup, Input, Text, VStack } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form';
+import { GeneralContext } from '@/context';
 
 export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
   const [showCreateButton, setShowCreateButton] = useState<boolean>(true);
+  const { isLoading } = useContext(GeneralContext);
   const { register, handleSubmit, reset, formState: { errors } } = useForm<FormType>();
 
   const onClickAddNewTask = () => {
@@ -29,6 +31,7 @@ export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
               width='100%'
               colorPalette='green'
               onClick={onClickAddNewTask}
+              disabled={isLoading}
             >Add new task</Button>
           )
           : (
@@ -39,8 +42,16 @@ export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
                   {...register('description', { required: 'Please enter a task description' })}
                 />
                 <ButtonGroup>
-                  <Button colorPalette='green' type='submit'>Add</Button>
-                  <Button colorPalette='red' onClick={onClickCancel}>Cancel</Button>
+                  <Button
+                    colorPalette='green'
+                    type='submit'
+                    disabled={isLoading}
+                  >Add</Button>
+                  <Button
+                    colorPalette='red'
+                    onClick={onClickCancel}
+                    disabled={isLoading}
+                  >Cancel</Button>
                 </ButtonGroup>
               </VStack>
               <Text color='red.500'>{errors?.description?.message}</Text>

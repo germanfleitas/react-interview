@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { Button, CheckboxCard, HStack } from '@chakra-ui/react';
+import { GeneralContext } from '@/context';
 import { HiOutlineTrash } from 'react-icons/hi';
 import type { TodoType } from '../types';
 
@@ -7,6 +9,8 @@ export const Todo = ({
   onToggleTodoCompleted,
   onDeleteTodo
 }: TodoProps) => {
+  const { isLoading } = useContext(GeneralContext);
+
   const handleOnToggleTodoCompleted = () => {
     onToggleTodoCompleted(!isCompleted)
   }
@@ -22,7 +26,13 @@ export const Todo = ({
           <CheckboxCard.Indicator />
         </CheckboxCard.Control>
       </CheckboxCard.Root>
-      <Button onClick={onDeleteTodo}  variant='ghost' title='Delete' padding={0}>
+      <Button
+        onClick={onDeleteTodo}
+        disabled={isLoading}
+        variant='ghost'
+        title='Delete'
+        padding={0}
+      >
         <HiOutlineTrash />
       </Button>
     </HStack>
