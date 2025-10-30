@@ -1,8 +1,7 @@
-import { Button, EmptyState as ChakraUIEmptyState, VStack } from '@chakra-ui/react'
+import { EmptyState as ChakraUIEmptyState, VStack } from '@chakra-ui/react'
 import { HiClipboardCheck } from 'react-icons/hi'
-import type { MouseEventHandler } from 'react'
 
-export const EmptyState = ({ onClickCreateNewTodoList }: EmptyStateProps) => {
+export const EmptyState = () => {
   return (
     <ChakraUIEmptyState.Root>
       <ChakraUIEmptyState.Content>
@@ -15,12 +14,7 @@ export const EmptyState = ({ onClickCreateNewTodoList }: EmptyStateProps) => {
             Add a new list to get started
           </ChakraUIEmptyState.Description>
         </VStack>
-        <Button onClick={onClickCreateNewTodoList}>Create new TODO list</Button>
       </ChakraUIEmptyState.Content>
     </ChakraUIEmptyState.Root>
   )
-}
-
-type EmptyStateProps = {
-  onClickCreateNewTodoList: MouseEventHandler<HTMLButtonElement>;
 }

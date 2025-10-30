@@ -4,6 +4,7 @@ import { TodoListGroup } from '@/components/TodoListGroup/TodoListGroup';
 import { EmptyState } from '@/components/EmptyState/EmptyState';
 import { TodoAPI } from '@/services/TodoAPI';
 import { Toaster, toaster } from '@/components/ui/toaster';
+import { NewTodoList } from '@/components/NewTodoList/NewTodoList';
 import type { TodoListType } from '../../components/types';
 
 export const MainScreen = () => {
@@ -25,9 +26,9 @@ export const MainScreen = () => {
     }
   }, []);
 
-  const onClickCreateNewTodoList = async () => {
+  const onClickCreateNewTodoList = async (name: string) => {
     setIsLoading(true);
-    await TodoAPI.createTodoList('New List');
+    await TodoAPI.createTodoList(name);
     await getTodoLists();
   };
 
@@ -42,7 +43,8 @@ export const MainScreen = () => {
 
   return (
     <Container p={6} bg='gray.50' minH='100vh'>
-      <Heading justifySelf='center'>TODO App (Crunchloop Interview edition!)</Heading>
+      <Heading justifySelf='center' marginBottom={4}>TODO App (Crunchloop Interview edition!)</Heading>
+      <NewTodoList onClickCreateNewTodoList={onClickCreateNewTodoList} />
       {
         isLoading 
           ? <Center minH='50vh'><Spinner /></Center>
@@ -50,11 +52,10 @@ export const MainScreen = () => {
             ? (
               <TodoListGroup
                 todoLists={todoLists}
-                onClickCreateNewTodoList={onClickCreateNewTodoList}
                 onClickCreateNewTodo={onClickCreateNewTodo}
               />
             )
-            : <EmptyState onClickCreateNewTodoList={onClickCreateNewTodoList} />
+            : <EmptyState />
       }
       <Toaster />
     </Container>

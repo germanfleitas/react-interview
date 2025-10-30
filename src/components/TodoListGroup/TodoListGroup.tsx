@@ -1,12 +1,10 @@
-import { Button, Container, Flex, ScrollArea } from '@chakra-ui/react';
+import { Container, Flex, ScrollArea } from '@chakra-ui/react';
 import { TodoList } from '../TodoList/TodoList';
-import type { MouseEventHandler } from 'react'
 import type { TodoListType } from '../types';
 
-export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList, onClickCreateNewTodo }: TodoListGroupProps) => {
+export const TodoListGroup = ({ todoLists, onClickCreateNewTodo }: TodoListGroupProps) => {
   return (
     <Container>
-      <Button onClick={onClickCreateNewTodoList}>New TODO list</Button>
       <ScrollArea.Root>
         <ScrollArea.Viewport>
           <ScrollArea.Content py='4'>
@@ -30,6 +28,5 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList, onClickCrea
 
 type TodoListGroupProps = {
   todoLists: TodoListType[];
-  onClickCreateNewTodoList: MouseEventHandler<HTMLButtonElement>;
   onClickCreateNewTodo: (todoListId: number) => (description: string) => void;
 }
