@@ -47,7 +47,8 @@ export const MainScreen = () => {
   };
 
   const onClickDeleteList = (todoListId: number) => async () => {
-    // Add logic
+    await TodoAPI.deleteTodoList(todoListId);
+    await getTodoLists();
   };
 
   const onToggleTodoCompleted = (todoId: number) => async (isCompleted: boolean) => {

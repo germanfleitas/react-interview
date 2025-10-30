@@ -23,6 +23,12 @@ export class TodoAPI {
     return response.data;
   }
 
+  static async deleteTodoList(todoListId: number): Promise<string> {
+    const response = await axios.delete(`${baseUrl}/todolists/${todoListId}`);
+
+    return response.data;
+  }
+
   static async createTodo(description: string, todoListId: number): Promise<string> {
     const body = {
       description,

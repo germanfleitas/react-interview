@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
   const [showCreateButton, setShowCreateButton] = useState<boolean>(true);
-  const { register, handleSubmit, formState: { errors } } = useForm<FormType>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormType>();
 
   const onClickAddNewTask = () => {
     setShowCreateButton(false);
@@ -17,6 +17,7 @@ export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
   const onSubmit = ({ description }: FormType) => {
     setShowCreateButton(true);
     onClickCreateNewTodo(description);
+    reset({ description: '' });
   };
 
   return (
