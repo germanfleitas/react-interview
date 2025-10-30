@@ -10,61 +10,129 @@ import type { TodoListType } from '../../components/types';
 export const MainScreen = () => {
   const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const resetErrorMessage = (e?: unknown) => {
+    setErrorMessage((e as Error)?.message ?? null);
+  };
 
   const getTodoLists = useCallback(async () => {
+    resetErrorMessage();
+
     try {
       const data = await TodoAPI.getTodoLists();
       setTodoLists(data);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
-      toaster.create({
-        description: 'Oops! Something went wrong... Try again later',
-        type: 'error'
-      });
+    } catch (e: unknown) {
+      resetErrorMessage(e);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
   const onClickCreateNewTodoList = async (name: string) => {
+    resetErrorMessage();
     setIsLoading(true);
-    await TodoAPI.createTodoList(name);
-    await getTodoLists();
+
+    try {
+      await TodoAPI.createTodoList(name);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickCreateNewTodo = (todoListId: number) => async (description: string) => {
-    await TodoAPI.createTodo(description, todoListId);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.createTodo(description, todoListId);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickCompleteList = (todoListId: number) => async () => {
-    await TodoAPI.completeTodoList(todoListId);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.completeTodoList(todoListId);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickEditList = (todoListId: number) => async (name: string) => {
-    await TodoAPI.editTodoList(todoListId, name);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.editTodoList(todoListId, name);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onClickDeleteList = (todoListId: number) => async () => {
-    await TodoAPI.deleteTodoList(todoListId);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.deleteTodoList(todoListId);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onToggleTodoCompleted = (todoId: number) => async (isCompleted: boolean) => {
-    await TodoAPI.toggleTodo(todoId, isCompleted);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.toggleTodo(todoId, isCompleted);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const onDeleteTodo = (todoId: number) => async () => {
-    await TodoAPI.deleteTodo(todoId);
-    await getTodoLists();
+    resetErrorMessage();
+
+    try {
+      await TodoAPI.deleteTodo(todoId);
+      await getTodoLists();
+    } catch (e: unknown) {
+      resetErrorMessage(e);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   useEffect(() => {
     getTodoLists();
   }, [getTodoLists]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      toaster.create({
+        description: errorMessage,
+        type: 'error'
+      });
+    }
+  }, [errorMessage]);
 
   return (
     <Container p={6} bg='gray.50' minH='100vh'>
