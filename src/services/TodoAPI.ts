@@ -16,4 +16,14 @@ export class TodoAPI {
 
     return response.data;
   }
+
+  static async createTodo(description: string, todoListId: number): Promise<string> {
+    const body = {
+      description,
+      todoListId
+    };
+    const response = await axios.post(`${baseUrl}/todos`, body);
+
+    return response.data;
+  }
 }

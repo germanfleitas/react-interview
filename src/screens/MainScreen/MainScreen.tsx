@@ -31,9 +31,9 @@ export const MainScreen = () => {
     await getTodoLists();
   };
 
-  const onClickCreateNewTodo = (todoListId: number) => () => {
-    console.log(todoListId);
-    // Add creation logic
+  const onClickCreateNewTodo = (todoListId: number) => async (description: string) => {
+    await TodoAPI.createTodo(description, todoListId);
+    await getTodoLists();
   };
 
   useEffect(() => {

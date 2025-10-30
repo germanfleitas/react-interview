@@ -31,5 +31,5 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodoList, onClickCrea
 type TodoListGroupProps = {
   todoLists: TodoListType[];
   onClickCreateNewTodoList: MouseEventHandler<HTMLButtonElement>;
-  onClickCreateNewTodo: (todoListId: number) => MouseEventHandler<HTMLButtonElement>;
+  onClickCreateNewTodo: (todoListId: number) => (description: string) => void;
 }
