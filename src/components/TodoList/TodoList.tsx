@@ -1,8 +1,8 @@
 import { Card, VStack } from '@chakra-ui/react';
 import { Todo } from '../Todo/Todo';
 import { NewTodo } from '../NewTodo/NewTodo';
-import type { TodoListType } from '../types';
 import { TodoListActions } from '../TodoListActions/TodoListActions';
+import type { TodoListType } from '../types';
 
 export const TodoList = ({
   todoList: { todos, name },
@@ -10,7 +10,8 @@ export const TodoList = ({
   onCompleteList,
   onEditList,
   onDeleteList,
-  onToggleTodoCompleted
+  onToggleTodoCompleted,
+  onDeleteTodo
 }: TodoListProps) => {
   return (
     <Card.Root padding={6} width='20em' height='fit-content'>
@@ -26,6 +27,7 @@ export const TodoList = ({
             key={todo.id}
             todo={todo}
             onToggleTodoCompleted={onToggleTodoCompleted(todo.id)}
+            onDeleteTodo={onDeleteTodo(todo.id)}
           />
         ))}
       </VStack>
@@ -41,4 +43,5 @@ type TodoListProps = {
   onEditList: () => void;
   onDeleteList: () => void;
   onToggleTodoCompleted: (todoId: number) => (isCompleted: boolean) => void;
+  onDeleteTodo: (todoId: number) => () => void;
 }

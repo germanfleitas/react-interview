@@ -55,6 +55,11 @@ export const MainScreen = () => {
     await getTodoLists();
   };
 
+  const onDeleteTodo = (todoId: number) => async () => {
+    await TodoAPI.deleteTodo(todoId);
+    await getTodoLists();
+  };
+
   useEffect(() => {
     getTodoLists();
   }, [getTodoLists]);
@@ -75,6 +80,7 @@ export const MainScreen = () => {
                 onEditList={onClickEditList}
                 onDeleteList={onClickDeleteList}
                 onToggleTodoCompleted={onToggleTodoCompleted}
+                onDeleteTodo={onDeleteTodo}
               />
             )
             : <EmptyState />

@@ -33,9 +33,15 @@ export class TodoAPI {
     return response.data;
   }
 
-    static async toggleTodo(todoId: number, isCompleted: boolean): Promise<string> {
+  static async toggleTodo(todoId: number, isCompleted: boolean): Promise<string> {
     const body = { isCompleted };
     const response = await axios.patch(`${baseUrl}/todos/${todoId}`, body);
+
+    return response.data;
+  }
+
+  static async deleteTodo(todoId: number): Promise<string> {
+    const response = await axios.delete(`${baseUrl}/todos/${todoId}`);
 
     return response.data;
   }
