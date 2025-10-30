@@ -43,7 +43,7 @@ type TodoListGroupProps = {
   todoLists: TodoListType[];
   onClickCreateNewTodo: (todoListId: number) => (description: string) => void;
   onCompleteList: (todoListId: number) => () => void;
-  onEditList: (todoListId: number) => () => void;
+  onEditList: (todoListId: number) => (name: string) => void;
   onDeleteList: (todoListId: number) => () => void;
   onToggleTodoCompleted: (todoId: number) => (isCompleted: boolean) => void;
   onDeleteTodo: (todoId: number) => () => void;

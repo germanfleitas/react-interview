@@ -42,8 +42,9 @@ export const MainScreen = () => {
     await getTodoLists();
   };
 
-  const onClickEditList = (todoListId: number) => async () => {
-    // Add logic
+  const onClickEditList = (todoListId: number) => async (name: string) => {
+    await TodoAPI.editTodoList(todoListId, name);
+    await getTodoLists();
   };
 
   const onClickDeleteList = (todoListId: number) => async () => {

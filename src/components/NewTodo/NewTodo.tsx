@@ -35,7 +35,7 @@ export const NewTodo = ({ onClickCreateNewTodo }: NewTodoProps) => {
             <form onSubmit={handleSubmit(onSubmit)}>
               <VStack alignItems='flex-end'>
                 <Input
-                  placeholder='Enter your task...'
+                  placeholder='Enter your list name...'
                   {...register('description', { required: 'Please enter a task description' })}
                 />
                 <ButtonGroup>

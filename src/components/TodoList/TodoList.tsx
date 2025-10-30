@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import { Card, VStack } from '@chakra-ui/react';
 import { Todo } from '../Todo/Todo';
 import { NewTodo } from '../NewTodo/NewTodo';
 import { TodoListActions } from '../TodoListActions/TodoListActions';
+import { EditTodoList } from '../EditTodoList/EditTodoList';
 import type { TodoListType } from '../types';
 
 export const TodoList = ({
@@ -13,14 +15,30 @@ export const TodoList = ({
   onToggleTodoCompleted,
   onDeleteTodo
 }: TodoListProps) => {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const onToggleEditMode = () => {
+    setIsEditing(!isEditing);
+  };
+
   return (
     <Card.Root padding={6} width='20em' height='fit-content'>
       <TodoListActions
-        onCompleteList={onCompleteList}
-        onEditList={onEditList}
-        onDeleteList={onDeleteList}
+        onClickCompleteList={onCompleteList}
+        onClickEditList={onToggleEditMode}
+        onClickDeleteList={onDeleteList}
       />
-      <Card.Title marginBottom={4}>{name}</Card.Title>
+      {
+        isEditing
+          ? (
+            <EditTodoList
+              originalName={name}
+              onEditTodoList={onEditList}
+              onToggleEditMode={onToggleEditMode}
+            />
+          )
+          : <Card.Title marginBottom={6}>{name}</Card.Title>
+      }
       <VStack marginBottom={4}>
         {todos.map((todo) => (
           <Todo
@@ -40,7 +58,7 @@ type TodoListProps = {
   todoList: TodoListType;
   onClickCreateNewTodo: (description: string) => void;
   onCompleteList: () => void;
-  onEditList: () => void;
+  onEditList: (name: string) => void;
   onDeleteList: () => void;
   onToggleTodoCompleted: (todoId: number) => (isCompleted: boolean) => void;
   onDeleteTodo: (todoId: number) => () => void;

@@ -17,6 +17,13 @@ export class TodoAPI {
     return response.data;
   }
 
+  static async editTodoList(todoListId: number, name: string): Promise<string> {
+    const body = { name };
+    const response = await axios.put(`${baseUrl}/todolists/${todoListId}`, body);
+
+    return response.data;
+  }
+
   static async completeTodoList(todoListId: number): Promise<string> {
     const response = await axios.put(`${baseUrl}/todolists/${todoListId}/complete`);
 
