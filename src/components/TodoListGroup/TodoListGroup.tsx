@@ -2,7 +2,13 @@ import { Container, Flex, ScrollArea } from '@chakra-ui/react';
 import { TodoList } from '../TodoList/TodoList';
 import type { TodoListType } from '../types';
 
-export const TodoListGroup = ({ todoLists, onClickCreateNewTodo }: TodoListGroupProps) => {
+export const TodoListGroup = ({
+  todoLists,
+  onClickCreateNewTodo,
+  onCompleteList,
+  onEditList,
+  onDeleteList
+}: TodoListGroupProps) => {
   return (
     <Container>
       <ScrollArea.Root>
@@ -14,6 +20,9 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodo }: TodoListGroup
                   key={todoList.id}
                   todoList={todoList}
                   onClickCreateNewTodo={onClickCreateNewTodo(todoList.id)}
+                  onCompleteList={onCompleteList(todoList.id)}
+                  onEditList={onEditList(todoList.id)}
+                  onDeleteList={onDeleteList(todoList.id)}
                 />
               ))}
             </Flex>
@@ -29,4 +38,7 @@ export const TodoListGroup = ({ todoLists, onClickCreateNewTodo }: TodoListGroup
 type TodoListGroupProps = {
   todoLists: TodoListType[];
   onClickCreateNewTodo: (todoListId: number) => (description: string) => void;
+  onCompleteList: (todoListId: number) => () => void;
+  onEditList: (todoListId: number) => () => void;
+  onDeleteList: (todoListId: number) => () => void;
 }

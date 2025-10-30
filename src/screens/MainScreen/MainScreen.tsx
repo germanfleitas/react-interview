@@ -37,6 +37,19 @@ export const MainScreen = () => {
     await getTodoLists();
   };
 
+  const onClickCompleteList = (todoListId: number) => async () => {
+    // Add logic
+  };
+
+  const onClickEditList = (todoListId: number) => async () => {
+    // Add logic
+  };
+
+  const onClickDeleteList = (todoListId: number) => async () => {
+    // Add logic
+  };
+
+
   useEffect(() => {
     getTodoLists();
   }, [getTodoLists]);
@@ -53,6 +66,9 @@ export const MainScreen = () => {
               <TodoListGroup
                 todoLists={todoLists}
                 onClickCreateNewTodo={onClickCreateNewTodo}
+                onCompleteList={onClickCompleteList}
+                onEditList={onClickEditList}
+                onDeleteList={onClickDeleteList}
               />
             )
             : <EmptyState />
