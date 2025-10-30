@@ -17,12 +17,25 @@ export class TodoAPI {
     return response.data;
   }
 
+  static async completeTodoList(todoListId: number): Promise<string> {
+    const response = await axios.put(`${baseUrl}/todolists/${todoListId}/complete`);
+
+    return response.data;
+  }
+
   static async createTodo(description: string, todoListId: number): Promise<string> {
     const body = {
       description,
       todoListId
     };
     const response = await axios.post(`${baseUrl}/todos`, body);
+
+    return response.data;
+  }
+
+    static async toggleTodo(todoId: number, isCompleted: boolean): Promise<string> {
+    const body = { isCompleted };
+    const response = await axios.patch(`${baseUrl}/todos/${todoId}`, body);
 
     return response.data;
   }

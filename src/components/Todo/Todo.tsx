@@ -1,9 +1,13 @@
 import { CheckboxCard } from '@chakra-ui/react';
 import type { TodoType } from '../types';
 
-export const Todo = ({ todo: { description } }: TodoProps) => {
+export const Todo = ({ todo: { description, isCompleted }, onToggleTodoCompleted }: TodoProps) => {
+  const handleOnToggleTodoCompleted = () => {
+    onToggleTodoCompleted(!isCompleted)
+  }
+
   return (
-    <CheckboxCard.Root width='100%'>
+    <CheckboxCard.Root width='100%' checked={isCompleted} onClick={handleOnToggleTodoCompleted}>
       <CheckboxCard.HiddenInput />
       <CheckboxCard.Control>
         <CheckboxCard.Content>
@@ -17,4 +21,5 @@ export const Todo = ({ todo: { description } }: TodoProps) => {
 
 type TodoProps = {
   todo: TodoType;
+  onToggleTodoCompleted: (isCompleted: boolean) => void;
 }

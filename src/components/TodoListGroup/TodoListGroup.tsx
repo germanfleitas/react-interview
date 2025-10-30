@@ -7,7 +7,8 @@ export const TodoListGroup = ({
   onClickCreateNewTodo,
   onCompleteList,
   onEditList,
-  onDeleteList
+  onDeleteList,
+  onToggleTodoCompleted
 }: TodoListGroupProps) => {
   return (
     <Container>
@@ -23,6 +24,7 @@ export const TodoListGroup = ({
                   onCompleteList={onCompleteList(todoList.id)}
                   onEditList={onEditList(todoList.id)}
                   onDeleteList={onDeleteList(todoList.id)}
+                  onToggleTodoCompleted={onToggleTodoCompleted}
                 />
               ))}
             </Flex>
@@ -41,4 +43,5 @@ type TodoListGroupProps = {
   onCompleteList: (todoListId: number) => () => void;
   onEditList: (todoListId: number) => () => void;
   onDeleteList: (todoListId: number) => () => void;
+  onToggleTodoCompleted: (todoId: number) => (isCompleted: boolean) => void;
 }

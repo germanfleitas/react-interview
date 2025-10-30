@@ -9,7 +9,8 @@ export const TodoList = ({
   onClickCreateNewTodo,
   onCompleteList,
   onEditList,
-  onDeleteList
+  onDeleteList,
+  onToggleTodoCompleted
 }: TodoListProps) => {
   return (
     <Card.Root padding={6} width='20em' height='fit-content'>
@@ -20,7 +21,13 @@ export const TodoList = ({
       />
       <Card.Title marginBottom={4}>{name}</Card.Title>
       <VStack marginBottom={4}>
-        {todos.map((todo) => <Todo key={todo.id} todo={todo}/>)}
+        {todos.map((todo) => (
+          <Todo
+            key={todo.id}
+            todo={todo}
+            onToggleTodoCompleted={onToggleTodoCompleted(todo.id)}
+          />
+        ))}
       </VStack>
       <NewTodo onClickCreateNewTodo={onClickCreateNewTodo} />
     </Card.Root>
@@ -33,4 +40,5 @@ type TodoListProps = {
   onCompleteList: () => void;
   onEditList: () => void;
   onDeleteList: () => void;
+  onToggleTodoCompleted: (todoId: number) => (isCompleted: boolean) => void;
 }

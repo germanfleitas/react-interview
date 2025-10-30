@@ -38,7 +38,8 @@ export const MainScreen = () => {
   };
 
   const onClickCompleteList = (todoListId: number) => async () => {
-    // Add logic
+    await TodoAPI.completeTodoList(todoListId);
+    await getTodoLists();
   };
 
   const onClickEditList = (todoListId: number) => async () => {
@@ -49,6 +50,10 @@ export const MainScreen = () => {
     // Add logic
   };
 
+  const onToggleTodoCompleted = (todoId: number) => async (isCompleted: boolean) => {
+    await TodoAPI.toggleTodo(todoId, isCompleted);
+    await getTodoLists();
+  };
 
   useEffect(() => {
     getTodoLists();
@@ -69,6 +74,7 @@ export const MainScreen = () => {
                 onCompleteList={onClickCompleteList}
                 onEditList={onClickEditList}
                 onDeleteList={onClickDeleteList}
+                onToggleTodoCompleted={onToggleTodoCompleted}
               />
             )
             : <EmptyState />
